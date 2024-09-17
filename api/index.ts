@@ -26,7 +26,7 @@ async function sendTelegramMessage(message) {
         console.error('Error sending message:', error);
     }
 }
-
+app.use(express.static('public'));
 app.get("/", (req, res) => {
     const errorMessage = 'Hello Bimo';
     sendTelegramMessage(errorMessage);
