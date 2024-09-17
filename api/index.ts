@@ -33,6 +33,7 @@ app.get("/", (req, res) => {
 });
 
 app.post("/message", (req, res) => {
+    console.log(req.body);
     const message = req.body.message;
     sendTelegramMessage(message);
 
