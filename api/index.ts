@@ -32,9 +32,8 @@ app.get("/", (req, res) => {
     return res.send("API Running....");
 });
 
-app.post("/message", (req, res) => {
-    console.log(req.body);
-    const message = req.body.message;
+app.get("/message/:text", (req, res) => {
+    const message = req.params.text;
     sendTelegramMessage(message);
 
     return res.send("Success");
