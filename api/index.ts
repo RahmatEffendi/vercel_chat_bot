@@ -2,10 +2,8 @@
 // import axios from 'axios';
 const express = require("express");
 const axios = require("axios");
-const bodyParser = require('body-parser');
 
 const app = express();
-app.use(bodyParser.urlencoded({ extended: true }));
 
 // Replace with your actual token and chat ID
 const TELEGRAM_TOKEN = '7515756008:AAHbStxPySuqNam2QBnlTruRjCwjDjn1Ssk';
