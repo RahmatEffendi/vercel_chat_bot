@@ -26,11 +26,11 @@ async function sendTelegramMessage(message) {
     }
 }
 
-app.get("/", (req, res) => {
-    const message = "Hell";
+app.post("/", (req, res) => {
+    const message = req.body.message;
     sendTelegramMessage(message);
-    
-    return res.send("What the hell")
+
+    return res.send("Success");
 });
 
 app.listen(3000, () => console.log("Server ready on port 3000."));
