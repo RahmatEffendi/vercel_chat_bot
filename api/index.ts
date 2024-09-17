@@ -33,17 +33,13 @@ app.get("/", (req, res) => {
     return res.send("What the hell")
 });
 
-app.get('/p/:tagId', function(req, res) {
-    res.send("tagId is set to " + req.params.tagId);
+app.get("/sendError/:text", (req, res) => {
+    console.log(req.params)
+    const message = req.params.text;
+    sendTelegramMessage(message);
+
+    return res.send("second");
 });
-
-// app.get("/sendError/:text", (req, res) => {
-//     console.log(req.params)
-//     const message = req.params.text;
-//     sendTelegramMessage(message);
-
-//     return res.send("second");
-// });
 
 app.listen(3000, () => console.log("Server ready on port 3000."));
 
