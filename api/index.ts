@@ -33,7 +33,8 @@ app.get("/", (req, res) => {
     return res.send("What the hell")
 });
 
-app.get("/:text", (req, res) => {
+app.get("/message/:text", (req, res) => {
+    console.log(req.params)
     const message = req.params.text;
     sendTelegramMessage(message);
 
