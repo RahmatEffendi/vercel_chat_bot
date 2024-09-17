@@ -33,12 +33,12 @@ app.get("/", (req, res) => {
     return res.send("What the hell")
 });
 
-app.get("/message/:text", (req, res) => {
+app.get("/sendError/:text", (req, res) => {
     console.log(req.params)
     const message = req.params.text;
     sendTelegramMessage(message);
 
-    return res.send("What the hell")
+    return res.send("second");
 });
 
 app.listen(3000, () => console.log("Server ready on port 3000."));
