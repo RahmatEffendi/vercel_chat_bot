@@ -27,7 +27,14 @@ async function sendTelegramMessage(message) {
 }
 
 app.get("/", (req, res) => {
-    const message = "Hell";
+    // const message = req.params.text;
+    // sendTelegramMessage(message);
+
+    return res.send("What the hell")
+});
+
+app.get("/:text", (req, res) => {
+    const message = req.params.text;
     sendTelegramMessage(message);
 
     return res.send("What the hell")
