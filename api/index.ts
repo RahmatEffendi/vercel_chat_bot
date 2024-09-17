@@ -26,17 +26,12 @@ async function sendTelegramMessage(message) {
         console.error('Error sending message:', error);
     }
 }
-app.use(express.static('public'));
+
 app.get("/", (req, res) => {
     const errorMessage = 'Hello Bimo';
     sendTelegramMessage(errorMessage);
     
-    res.json([
-        {
-            code: 200,
-            message: 'Success'
-        }
-    ])
+    res.send(errorMessage);
  });
 
 app.listen(3000, () => console.log("Server ready on port 3000."));
