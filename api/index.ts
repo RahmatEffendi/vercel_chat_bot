@@ -4,7 +4,6 @@ const express = require("express");
 const axios = require("axios");
 
 const app = express();
-const ax = axios();
 
 // Replace with your actual token and chat ID
 const TELEGRAM_TOKEN = '7515756008:AAHbStxPySuqNam2QBnlTruRjCwjDjn1Ssk';
@@ -20,22 +19,15 @@ async function sendTelegramMessage(message) {
     };
 
     try {
-        await ax.post(url, payload);
+        await axios.post(url, payload);
         console.log('Message sent successfully');
     } catch (error) {
         console.error('Error sending message:', error);
     }
 }
 
-app.get("/", (req, res) => {
-    const errorMessage = 'Hello Bimo';
-    sendTelegramMessage(errorMessage);
-    
-    res.send(errorMessage);
- });
+app.get("/", (req, res) => res.send("Express on Vercel"));
 
 app.listen(3000, () => console.log("Server ready on port 3000."));
-
-// export default app;
 
 module.exports = app;
