@@ -26,6 +26,8 @@ async function sendTelegramMessage(message) {
     }
 }
 
+app.use(express.bodyParser());
+
 app.get("/", (req, res) => {
     return res.send("API Running....");
 });
