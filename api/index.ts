@@ -33,9 +33,8 @@ app.get("/", (req, res) => {
     return res.send("What the hell")
 });
 
-app.get("/sendError/:text", (req, res) => {
-    console.log(req.params)
-    const message = req.params.text;
+app.get("/sendError", (req, res) => {
+    const message = req.query.text;
     sendTelegramMessage(message);
 
     return res.send("second");
