@@ -27,12 +27,8 @@ async function sendTelegramMessage(message) {
 }
 
 app.get("/", (req, res) => {
-    return res.send("API Running....");
-});
-
-app.get("/message/:text", (req, res) => {
-    const message = req.params.text;
-    sendTelegramMessage(message);
+    const text = req.params.text;
+    sendTelegramMessage(text);
 
     return res.send("Success");
 });
