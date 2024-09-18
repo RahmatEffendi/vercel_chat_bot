@@ -5,6 +5,9 @@ const axios = require("axios");
 
 const app = express();
 
+app.use(express.json()) // for parsing application/json
+app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+
 // Replace with your actual token and chat ID
 const TELEGRAM_TOKEN = '7515756008:AAHbStxPySuqNam2QBnlTruRjCwjDjn1Ssk';
 const CHAT_ID = '-4540754160'; // You can get this by sending a message to your bot and checking the updates
@@ -29,12 +32,12 @@ async function sendTelegramMessage(message) {
 app.get("/", (req, res) => {
     // const message = req.params.text;
     // sendTelegramMessage(message);
-
     return res.send("What the hell")
 });
 
-app.get("/sendError", (req, res) => {
-    const message = req.query.text;
+app.post("/sendError", (req, res) => {
+    console.log(req.body)
+    const message = req.body.host;
     sendTelegramMessage(message);
 
     return res.send("second");
