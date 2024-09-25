@@ -47,7 +47,7 @@ app.get("/", (req, res) => {
     return res.send("What the hell")
 });
 
-app.post("/sendError", (req, res) => {
+app.get("/sendError", (req, res) => {
     logger.info(req.body)
     const message = req.body.host;
     sendTelegramMessage(message);
