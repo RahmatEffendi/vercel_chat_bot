@@ -44,7 +44,7 @@ async function sendTelegramMessage(message) {
 
 async function generateTime(times) {
     return new Promise((resolve, rejects) => {
-        let unix_timestamp = times;
+        let unixTimestamp = times;
 
         // // Create a new JavaScript Date object based on the timestamp
         // // multiplied by 1000 so that the argument is in milliseconds, not seconds
