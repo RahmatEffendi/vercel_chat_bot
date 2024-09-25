@@ -76,6 +76,27 @@ app.get("/", (req, res) => {
     return res.send("What the hell")
 });
 
+app.get("/test", (req, res) => {
+    // Sample JSON object
+    const jsonData = {
+        "customPayloads": {
+        "custom:host": [
+            "ipm-ibm-lab-dem"
+        ],
+        "custom:message": [
+            "Tes kirim notif error"
+        ]
+        }
+    };
+    
+    // Access the custom:host value
+    const customHost = jsonData.customPayloads['custom:host'];
+    
+    // Log the value
+    console.log('Custom Host:', customHost[0]); // Output: ipm-ibm-lab-dem
+  
+});
+
 app.post("/sendError", async (req, res) => {
     // {
     //     "level":"info",
@@ -109,8 +130,9 @@ app.post("/sendError", async (req, res) => {
     const data = req.body.issue;
     const start = await generateTime(data.start);
     const end = await generateTime(data.end);
-    // const host = data.customPayloads === undefined ? undefined : JSON.parse(data.customPayloads);
-    // logger.info(host);
+
+    const host = data.customPayloads === undefined ? undefined : data.customPayloads['custom:host'];
+    console.log(host);
 
     const message = "Event Id: "+data.id+ "\n"
                     +"Zone: "+data.zone+ "\n"
