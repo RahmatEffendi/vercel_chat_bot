@@ -73,7 +73,7 @@ app.get("/", (req, res) => {
     return res.send("What the hell")
 });
 
-app.get("/sendError", async (req, res) => {
+app.post("/sendError", async (req, res) => {
     // {
     //     "level":"info",
     //     "message": {
