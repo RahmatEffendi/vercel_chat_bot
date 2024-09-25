@@ -102,7 +102,7 @@ app.post("/sendError", async (req, res) => {
     //         }
     //     }
     // }
-    const data = req.body.host.issue;
+    const data = req.body.issue;
     const start = await generateTime(data.start);
     const end = await generateTime(data.end);
 
