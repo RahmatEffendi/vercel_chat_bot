@@ -108,8 +108,7 @@ app.post("/sendError", async (req, res) => {
 
     const message = "Event Id: "+data.id+ "\n"
                     +"Zone: "+data.zone+ "\n"
-                    +"Host: "+data.customPayloads.custom.host+ "\n"
-                    +"CustomPayloads: "+data.customPayloads+ "\n"
+                    +"Host: "+data.customPayloads+ "\n"
                     +"State: "+data.state+ "\n"
                     +"Type: "+data.type+ "\n"
                     +"Text: "+data.text+ "\n"
