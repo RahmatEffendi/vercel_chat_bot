@@ -109,8 +109,8 @@ app.post("/sendError", async (req, res) => {
     const data = req.body.issue;
     const start = await generateTime(data.start);
     const end = await generateTime(data.end);
-    const host = JSON.parse(data.customPayloads);
-    logger.info(host["custom:host"]);
+    const host = data.customPayloads === undefined ? undefined : JSON.parse(data.customPayloads);
+    logger.info(data.customPayloads !== undefined ? host["custom:host"] : 'Enggak datanya bang');
 
     const message = "Event Id: "+data.id+ "\n"
                     +"Zone: "+data.zone+ "\n"
