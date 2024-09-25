@@ -2,6 +2,15 @@
 // import axios from 'axios';
 const express = require("express");
 const axios = require("axios");
+const winston = require("winston");
+const logger = winston.createLogger({
+  level: "info",
+  format: winston.format.json(),
+  transports: [
+    new winston.transports.Console(),
+    new winston.transports.File({ filename: "logs/app.log" }),
+  ],
+});
 
 const app = express();
 
@@ -21,6 +30,8 @@ async function sendTelegramMessage(message) {
         text: message,
     };
 
+    logger.info(payload);
+
     try {
         await axios.post(url, payload);
         console.log('Message sent successfully');
@@ -36,7 +47,7 @@ app.get("/", (req, res) => {
 });
 
 app.post("/sendError", (req, res) => {
-    console.log(req.body)
+    logger.info(req.body)
     const message = req.body.host;
     sendTelegramMessage(message);
 
