@@ -43,6 +43,7 @@ async function sendTelegramMessage(message) {
 app.get("/", (req, res) => {
     // const message = req.params.text;
     // sendTelegramMessage(message);
+    logger.info('running index');
     return res.send("What the hell")
 });
 
