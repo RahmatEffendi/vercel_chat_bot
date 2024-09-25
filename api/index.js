@@ -3,6 +3,8 @@
 const express = require("express");
 const axios = require("axios");
 const winston = require("winston");
+const { resolve } = require("path");
+const { rejects } = require("assert");
 const logger = winston.createLogger({
   level: "info",
   format: winston.format.json(),
@@ -40,6 +42,30 @@ async function sendTelegramMessage(message) {
     }
 }
 
+async function generateTime(times) {
+    return new Promise((resolve, rejects) => {
+        let unix_timestamp = times;
+
+        // Create a new JavaScript Date object based on the timestamp
+        // multiplied by 1000 so that the argument is in milliseconds, not seconds
+        var date = new Date(unix_timestamp * 1000);
+        
+        // Hours part from the timestamp
+        var hours = date.getHours();
+        
+        // Minutes part from the timestamp
+        var minutes = "0" + date.getMinutes();
+        
+        // Seconds part from the timestamp
+        var seconds = "0" + date.getSeconds();
+        
+        // Will display time in 10:30:23 format
+        var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+
+        resolve(formattedTime);
+    });
+}
+
 app.get("/", (req, res) => {
     // const message = req.params.text;
     // sendTelegramMessage(message);
@@ -47,10 +73,51 @@ app.get("/", (req, res) => {
     return res.send("What the hell")
 });
 
-app.get("/sendError", (req, res) => {
-    logger.info(req.body)
-    const message = req.body.host;
-    sendTelegramMessage(message);
+app.get("/sendError", async (req, res) => {
+    // {
+    //     "level":"info",
+    //     "message": {
+    //         "issue": {
+    //             "availabilityZone":"not available",
+    //             "container":"not available",
+    //             "containerNames":[],
+    //             "customZone":"not available",
+    //             "description":"It works!",
+    //             "end":1727238428982,
+    //             "entity":"not available",
+    //             "entityLabel":"not available",
+    //             "fqdn":"not available",
+    //             "id":"TG3-bq2zSW6vpJKF5OQeuQ",
+    //             "link":"https://www.ibm.com/docs/obi/current?topic=alerting-webhooks",
+    //             "manualCloseReason":"test-reason",
+    //             "manualCloseTimestamp":"1727238418982",
+    //             "manualCloseUsername":"test-username",
+    //             "metricNames":[],
+    //             "service":"not available",
+    //             "start":1727238418982,
+    //             "tags":"not available",
+    //             "text":"Alert Channel test",
+    //             "type":"change",
+    //             "zone":"not available"
+    //         }
+    //     }
+    // }
+    const data = req.body.host.issue;
+    const start = await generateTime(data.start);
+    const end = await generateTime(data.end);
+
+    const message = "Event Id: "+data.id+ "\n"
+                    +"Zone: "+data.zone+ "\n"
+                    +"Host: "+data.customPayloads.custom.host+ "\n"
+                    +"CustomPayloads: "+data.customPayloads+ "\n"
+                    +"State: "+data.state+ "\n"
+                    +"Type: "+data.type+ "\n"
+                    +"Text: "+data.text+ "\n"
+                    +"Suggestion: "+data.suggestion +"\n"
+                    +"Start: "+start +"\n"
+                    +"End: "+end+"\n"
+                    +"Link: "+data.link+ "\n"
+    await sendTelegramMessage(message);
 
     return res.send("second");
 });
