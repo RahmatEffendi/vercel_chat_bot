@@ -32,7 +32,7 @@ async function sendTelegramMessage(message) {
         text: message,
     };
 
-    logger.info(payload);
+    // logger.info(payload);
 
     try {
         await axios.post(url, payload);
@@ -105,6 +105,7 @@ app.post("/sendError", async (req, res) => {
     //         }
     //     }
     // }
+    logger.info(req.body);
     const data = req.body.issue;
     const start = await generateTime(data.start);
     const end = await generateTime(data.end);
