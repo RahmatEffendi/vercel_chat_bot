@@ -132,11 +132,10 @@ app.post("/sendError", async (req, res) => {
     const end = await generateTime(data.end);
 
     const host = data.customPayloads === undefined ? undefined : data.customPayloads['custom:host'];
-    console.log(host);
 
     const message = "Event Id: "+data.id+ "\n"
                     +"Zone: "+data.zone+ "\n"
-                    +"Host: "+data.customPayloads+ "\n"
+                    +"Host: "+host+ "\n"
                     +"State: "+data.state+ "\n"
                     +"Type: "+data.type+ "\n"
                     +"Text: "+data.text+ "\n"
