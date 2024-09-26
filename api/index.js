@@ -158,7 +158,7 @@ app.post("/sendError", async (req, res) => {
     logger.info(req.body);
     const data = req.body.issue;
     const start = await generateTime(data.start);
-    const end = data.end !== undefined ?? await generateTime(data.end);
+    const end = data.end === undefined ? undefined : await generateTime(data.end);
 
     const host = data.customPayloads === undefined ? undefined : data.customPayloads['custom:host'];
 
