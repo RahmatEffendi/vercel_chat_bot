@@ -3,6 +3,8 @@
 const express = require("express");
 const axios = require("axios");
 const winston = require("winston");
+const moment = require("moment");
+
 const { resolve } = require("path");
 const { rejects } = require("assert");
 const logger = winston.createLogger({
@@ -44,28 +46,31 @@ async function sendTelegramMessage(message) {
 
 async function generateTime(times) {
     return new Promise((resolve, rejects) => {
-        let unixTimestamp = times;
+        // The Unix timestamp in milliseconds
+        const unixTimestamp = times;
 
-        // // Create a new JavaScript Date object based on the timestamp
-        // // multiplied by 1000 so that the argument is in milliseconds, not seconds
-        // var date = new Date(unix_timestamp * 1000);
-        
-        // // Hours part from the timestamp
-        // var hours = date.getHours();
-        
-        // // Minutes part from the timestamp
-        // var minutes = "0" + date.getMinutes();
-        
-        // // Seconds part from the timestamp
-        // var seconds = "0" + date.getSeconds();
-        
-        // // Will display time in 10:30:23 format
-        // var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+        // Create a Date object from the timestamp
+        const date = new Date(unixTimestamp);
 
-        const date = new Date(unixTimestamp * 1000);
-        const formattedTime = date.toLocaleTimeString();
+        // Define options for formatting
+        const options = {
+            timeZone: 'Asia/Jakarta', // Indonesian timezone
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false, // 24-hour format
+        };
+
+        // Format the date
+        const formatter = new Intl.DateTimeFormat('id-ID', options);
+        const formattedDate = formatter.format(date);
+
+        // console.log(formattedDate);
         
-        resolve(formattedTime);
+        resolve(formattedDate);
     });
 }
 
@@ -77,24 +82,48 @@ app.get("/", (req, res) => {
 });
 
 app.get("/test", (req, res) => {
-    // Sample JSON object
-    const jsonData = {
-        "customPayloads": {
-        "custom:host": [
-            "ipm-ibm-lab-dem"
-        ],
-        "custom:message": [
-            "Tes kirim notif error"
-        ]
-        }
+    // // Sample JSON object
+    // const jsonData = {
+    //     "customPayloads": {
+    //     "custom:host": [
+    //         "ipm-ibm-lab-dem"
+    //     ],
+    //     "custom:message": [
+    //         "Tes kirim notif error"
+    //     ]
+    //     }
+    // };
+    
+    // // Access the custom:host value
+    // const customHost = jsonData.customPayloads['custom:host'];
+    
+    // // Log the value
+    // console.log('Custom Host:', customHost[0]); // Output: ipm-ibm-lab-dem
+
+    // The Unix timestamp in milliseconds
+    const unixTimestamp = 1727319831623;
+
+    // Create a Date object from the timestamp
+    const date = new Date(unixTimestamp);
+
+    // Define options for formatting
+    const options = {
+        timeZone: 'Asia/Jakarta', // Indonesian timezone
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false, // 24-hour format
     };
-    
-    // Access the custom:host value
-    const customHost = jsonData.customPayloads['custom:host'];
-    
-    // Log the value
-    console.log('Custom Host:', customHost[0]); // Output: ipm-ibm-lab-dem
-  
+
+    // Format the date
+    const formatter = new Intl.DateTimeFormat('id-ID', options);
+    const formattedDate = formatter.format(date);
+
+    console.log(formattedDate);
+
 });
 
 app.post("/sendError", async (req, res) => {
